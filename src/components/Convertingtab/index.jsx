@@ -50,7 +50,7 @@ const Convertingtab = () => {
                 alert("select valid unit")
                 return
             }
-            if (amount && (amount < conversions[fromTemp].lowest || amount > conversions[fromTemp].highest)) {
+            if ( amount < conversions[fromTemp].lowest || amount > conversions[fromTemp].highest) {
                 event.preventDefault()
                 stepElem.textContent = "Invalid"
                 alert("input valid amount")
