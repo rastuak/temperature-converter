@@ -50,20 +50,13 @@ const Convertingtab = () => {
                 alert("select valid unit")
                 return
             }
-            if ( amount < conversions[fromTemp].lowest || amount > conversions[fromTemp].highest) {
-                event.preventDefault()
-                stepElem.textContent = "Invalid"
-                alert("input valid amount")
-                return
-            }
 
             event.preventDefault()
             var steps = []
-            let step = 1
             let convertt = 0
             let converted = 0
-            const comparisona = conversions[fromTemp].comparison
-            const comparisonb = conversions[toTemp].comparison
+            const comparisona = conversions[toTemp].comparison
+            const comparisonb = conversions[fromTemp].comparison
             const lowesta = conversions[fromTemp].lowest
             const lowestb = conversions[toTemp].lowest
 
@@ -79,14 +72,19 @@ const Convertingtab = () => {
             }
 
             if (conversions[fromTemp].hasOwnProperty('lowest') && conversions[toTemp].hasOwnProperty('lowest')) {
-                if (lowesta <= lowestb) {
+                if (lowesta < lowestb) {
                     converted = (convertt * amount) + lowestb
                     steps.push(`Step 2: Hasil dari step 1 (${comparisona}/${comparisonb}) dikalikan dengan input (${amount}) kemudian dijumlahkan dengan titik tetap bawah (${lowestb})`)
                     steps.push(`Step 3: (${comparisona}/${comparisonb} x ${amount}) + ${lowestb}`)
                     resElem.textContent = `Result : ${amount} ${fromTemp} = ${converted} ${toTemp}`
-                } else if (lowesta >= lowestb) {
-                    converted = convertt * (amount - lowesta)
+                } else if (lowesta > lowestb) {
+                    converted = (convertt * (amount - lowesta)) + lowestb
                     steps.push(`Step 2: input (${amount}) dikurangi dengan titik tetap bawah (${lowesta}) kemudian dikalikan dengan Hasil dari step 1 (${comparisona}/${comparisonb})`)
+                    steps.push(`Step 3: ${comparisona}/${comparisonb} x (${amount} - ${lowesta})`)
+                    resElem.textContent = `Result : ${amount} ${fromTemp} = ${converted} ${toTemp}`
+                } else {
+                    converted = convertt * amount
+                    steps.push(`Step 2: input (${amount}) dikalikan dengan Hasil dari step 1 (${comparisona}/${comparisonb})`)
                     steps.push(`Step 3: ${comparisona}/${comparisonb} x (${amount} - ${lowesta})`)
                     resElem.textContent = `Result : ${amount} ${fromTemp} = ${converted} ${toTemp}`
                 }
@@ -105,8 +103,7 @@ const Convertingtab = () => {
             <div className='py-4 px-8 bg-gray-100 shadow-xl text-start w-full h-auto'>
                 <h1>Amount :</h1>
                 <form onSubmit={handleConvert}
-                    onKeyDown={handleConvert}
-                >
+                    onKeyDown={handleConvert}>
                     <input placeholder='0'
                         className='w-full p-1.5 left-0 right-0 rounded-md h-12 '
                         ref={searchRef}
