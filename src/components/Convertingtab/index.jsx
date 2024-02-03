@@ -79,8 +79,9 @@ const Convertingtab = () => {
                     resElem.textContent = `Result : ${amount} ${fromTemp} = ${converted} ${toTemp}`
                 } else if (lowesta > lowestb) {
                     converted = (convertt * (amount - lowesta)) + lowestb
-                    steps.push(`Step 2: input (${amount}) dikurangi dengan titik tetap bawah (${lowesta}) kemudian dikalikan dengan Hasil dari step 1 (${comparisona}/${comparisonb})`)
-                    steps.push(`Step 3: ${comparisona}/${comparisonb} x (${amount} - ${lowesta})`)
+                    steps.push(`Step 2: input (${amount}) dikurangi dengan titik tetap bawah dari temperatur asal (${lowesta}) kemudian dikalikan dengan Hasil dari step 1 (${comparisona}/${comparisonb})`)
+                    steps.push(`Step 3: hasil dari step 2 kemudian dijumlahkan dengan titik tetap bawah dari temperatur tujuan (${lowestb})`)
+                    steps.push(`Step 4: ( ${comparisona}/${comparisonb} x (${amount} - ${lowesta}) ) + ${lowestb}`)
                     resElem.textContent = `Result : ${amount} ${fromTemp} = ${converted} ${toTemp}`
                 } else {
                     converted = convertt * amount
